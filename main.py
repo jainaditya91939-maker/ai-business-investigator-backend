@@ -1,4 +1,3 @@
-from routes.product import router as products_router
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from sqlalchemy import text
@@ -8,14 +7,16 @@ from database import engine
 from routes.suppliers import router as suppliers_router
 from routes.transactions import router as transactions_router
 from routes.dashboard import router as dashboard_router
-
+from routes.product import router as products_router
 
 app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "http://127.0.0.1:5173"
+        "http://127.0.0.1:5173",
+        "https://ai-business-investigator-frontend.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
