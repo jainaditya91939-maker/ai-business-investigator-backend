@@ -9,7 +9,11 @@ from routes.transactions import router as transactions_router
 from routes.dashboard import router as dashboard_router
 from routes.product import router as products_router
 
+from auth import router as auth_router
+
+
 app = FastAPI()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,6 +26,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+app.include_router(auth_router)
 
 app.include_router(suppliers_router)
 app.include_router(transactions_router)
@@ -38,10 +45,13 @@ def home():
 
 @app.get("/test-db")
 def test_database():
+
     with engine.connect() as connection:
+
         result = connection.execute(
             text("SELECT current_database();")
         )
+
         database_name = result.scalar()
 
     return {
